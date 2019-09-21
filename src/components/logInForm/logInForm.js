@@ -6,14 +6,6 @@ const LogInForm = (props) => {
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleInputNameChange = (value) => {
-    setName(value)
-  }
-
-  const handleInputPasswordChange = (value) => {
-    setPassword(value)
-  }
-
   const onSubmit = (e) => {
     e.preventDefault();
     fetch('http://localhost:5000/api/v1/login',
@@ -35,10 +27,8 @@ const LogInForm = (props) => {
   .then(function(myJson) {
     console.log(myJson);
     if (myJson.status === 200) {
-      localStorage.setItem("auth", JSON.stringify({
-        isLoggedIn: true
-      }));
-      props.history.push('/')
+      props.setAuthToken(myJson.token);
+      props.history.push('/');
     }
   });
   }
@@ -47,8 +37,8 @@ const LogInForm = (props) => {
     <div className="container">
       <h1>Log In</h1>
       <form onSubmit={onSubmit}>
-        <input type="text" value={name} onChange={(e) => handleInputNameChange(e.target.value)}/>
-        <input type="password" value={password} onChange={(e) => handleInputPasswordChange(e.target.value)}/>
+        <input type="text" value={name} onChange={(e) => setName(e.target.value)}/>
+        <input type="password" value={password} onChange={(e) => setPassword(e.target.value)}/>
         <button>Log in</button>
       </form>
       <NavLink to="/signup" exact >

@@ -2,10 +2,8 @@ import React from 'react';
 
 const MainPage = (props) => {
   const logOff = () => {
-    localStorage.setItem("auth", JSON.stringify({
-      isLoggedIn: false
-    }));
-    props.history.push('/')
+    props.setAuthToken('');
+    props.history.push('/');
   }
 
   return (
